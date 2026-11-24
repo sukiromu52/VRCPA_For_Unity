@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UIElements;
 using VRC.SDK3.Avatars.Components;
 
@@ -13,16 +15,29 @@ namespace VRCPA.Editor
         private const string SettingsType = "VirtualLens2.VirtualLensSettings";
         private const string PoseSourceProperty = "externalPoseSource";
         private const string CameraPosePath = "Anchor/X/Y/Z/yaw/Pitch/CameraPOS";
+        private const string CurrentVersion = "1.0.0";
         private const string GitHubUrl = "https://github.com/sukiromu52/VRC-Photo-Atelier";
+        private const string ReleasesUrl = "https://github.com/sukiromu52/VRCPA_For_Unity/releases";
+        private const string LatestReleaseUrl = ReleasesUrl + "/latest";
+        private const string ReleaseTagUrl = ReleasesUrl + "/tag/";
         private const string LanguagePreference = "VRCPA.VirtualLens2Setup.Language";
+        private static readonly Version InstalledVersion = Version.Parse(CurrentVersion);
         private static readonly string[] LanguageChoices = { "English", "简体中文", "日本語" };
 
         private enum Language { English, SimplifiedChinese, Japanese }
+        private enum ReleaseStatus { Idle, Checking, UpToDate, UpdateAvailable, NoRelease, Failed }
 
         private SerializedProperty virtualLensObject;
         private SerializedProperty cameraPose;
         private Language language;
         private string message;
+        private UnityWebRequest releaseRequest;
+        private ReleaseStatus releaseStatus;
+        private string latestTag;
+        private Button checkButton;
+        private VisualElement releaseRow;
+        private Label releaseLabel;
+        private Button releaseButton;
 
         private void OnEnable()
         {
@@ -32,6 +47,18 @@ namespace VRCPA.Editor
             language = savedLanguage >= 0 && savedLanguage < LanguageChoices.Length
                 ? (Language)savedLanguage
                 : Language.English;
+        }
+
+        private void OnDisable()
+        {
+            var request = releaseRequest;
+            releaseRequest = null;
+            if (request == null)
+                return;
+
+            releaseStatus = ReleaseStatus.Idle;
+            request.Abort();
+            request.Dispose();
         }
 
         public override VisualElement CreateInspectorGUI()
@@ -82,6 +109,21 @@ namespace VRCPA.Editor
             subtitle.style.color = new Color(foreground.r, foreground.g, foreground.b, 0.72f);
             wordmark.Add(title);
             wordmark.Add(subtitle);
+
+            var versionRow = new VisualElement();
+            versionRow.style.flexDirection = FlexDirection.Row;
+            versionRow.style.flexWrap = Wrap.Wrap;
+            versionRow.style.alignItems = Align.Center;
+            versionRow.style.marginTop = 4;
+            var version = new Label("v" + CurrentVersion) { name = "vrcpa-version" };
+            version.style.fontSize = 11;
+            version.style.color = subtitle.style.color;
+            version.style.marginRight = 5;
+            checkButton = new Button(CheckForUpdates) { name = "vrcpa-check-version" };
+            checkButton.style.fontSize = 11;
+            versionRow.Add(version);
+            versionRow.Add(checkButton);
+            wordmark.Add(versionRow);
             identity.Add(wordmark);
             cover.Add(identity);
 
@@ -122,13 +164,114 @@ namespace VRCPA.Editor
                 language = (Language)languagePicker.index;
                 EditorPrefs.SetInt(LanguagePreference, (int)language);
                 languagePicker.tooltip = Text("Inspector language", "面板语言", "インスペクターの言語");
+                RefreshVersionUI();
                 message = null;
                 controls.MarkDirtyLayout();
                 controls.MarkDirtyRepaint();
             });
             actions.Add(languagePicker);
             cover.Add(actions);
+
+            releaseRow = new VisualElement { name = "vrcpa-release-result" };
+            releaseRow.style.width = Length.Percent(100);
+            releaseRow.style.flexDirection = FlexDirection.Row;
+            releaseRow.style.flexWrap = Wrap.Wrap;
+            releaseRow.style.alignItems = Align.Center;
+            releaseRow.style.marginTop = 5;
+            releaseLabel = new Label { name = "vrcpa-release-message" };
+            releaseLabel.style.whiteSpace = WhiteSpace.Normal;
+            releaseLabel.style.flexShrink = 1;
+            releaseLabel.style.color = foreground;
+            releaseButton = new Button(() => Application.OpenURL(ReleaseTagUrl + Uri.EscapeDataString(latestTag)))
+            {
+                name = "vrcpa-open-release",
+            };
+            releaseRow.Add(releaseLabel);
+            releaseRow.Add(releaseButton);
+            cover.Add(releaseRow);
+            RefreshVersionUI();
             return cover;
+        }
+
+        private void CheckForUpdates()
+        {
+            if (releaseRequest != null)
+                return;
+
+            var request = UnityWebRequest.Head(LatestReleaseUrl);
+            request.timeout = 10;
+            request.redirectLimit = 3;
+            releaseRequest = request;
+            releaseStatus = ReleaseStatus.Checking;
+            RefreshVersionUI();
+
+            try
+            {
+                request.SendWebRequest().completed += _ => CompleteReleaseCheck(request);
+            }
+            catch (InvalidOperationException)
+            {
+                releaseRequest = null;
+                request.Dispose();
+                releaseStatus = ReleaseStatus.Failed;
+                RefreshVersionUI();
+            }
+        }
+
+        private void CompleteReleaseCheck(UnityWebRequest request)
+        {
+            if (releaseRequest != request)
+                return;
+
+            releaseRequest = null;
+            using (request)
+            {
+                releaseStatus = request.responseCode == 404 ? ReleaseStatus.NoRelease : ReleaseStatus.Failed;
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    // GitHub's latest-release link resolves to the versioned release without an API request.
+                    var releaseUrl = request.uri.GetLeftPart(UriPartial.Path).TrimEnd('/');
+                    if (string.Equals(releaseUrl, ReleasesUrl, StringComparison.OrdinalIgnoreCase))
+                        releaseStatus = ReleaseStatus.NoRelease;
+                    else if (releaseUrl.StartsWith(ReleaseTagUrl, StringComparison.OrdinalIgnoreCase))
+                        ApplyReleaseTag(Uri.UnescapeDataString(releaseUrl.Substring(ReleaseTagUrl.Length)));
+                }
+            }
+            RefreshVersionUI();
+        }
+
+        private void ApplyReleaseTag(string tag)
+        {
+            latestTag = tag?.Trim();
+            if (!Version.TryParse(latestTag?.TrimStart('v', 'V'), out var latestVersion))
+            {
+                releaseStatus = ReleaseStatus.Failed;
+                return;
+            }
+
+            releaseStatus = latestVersion > InstalledVersion ? ReleaseStatus.UpdateAvailable : ReleaseStatus.UpToDate;
+        }
+
+        private void RefreshVersionUI()
+        {
+            if (checkButton == null)
+                return;
+
+            checkButton.text = Text("Check for updates", "检查更新", "更新を確認");
+            checkButton.SetEnabled(releaseStatus != ReleaseStatus.Checking);
+            releaseRow.style.display = releaseStatus == ReleaseStatus.Idle ? DisplayStyle.None : DisplayStyle.Flex;
+            var hasRelease = releaseStatus == ReleaseStatus.UpToDate || releaseStatus == ReleaseStatus.UpdateAvailable;
+            releaseButton.style.display = hasRelease ? DisplayStyle.Flex : DisplayStyle.None;
+            releaseButton.text = Text("View release ↗", "查看发布页 ↗", "リリースを表示 ↗");
+            releaseLabel.text = releaseStatus switch
+            {
+                ReleaseStatus.Checking => Text("Checking GitHub…", "正在查询 GitHub…", "GitHub に確認中…"),
+                ReleaseStatus.UpToDate => Text($"You’re up to date (GitHub {latestTag}).", $"当前无需更新（GitHub {latestTag}）。", $"更新はありません（GitHub {latestTag}）。"),
+                ReleaseStatus.UpdateAvailable => Text($"{latestTag} is available.", $"新版本 {latestTag} 已发布。", $"{latestTag} が公開されました。"),
+                ReleaseStatus.NoRelease => Text("No public release found.", "未找到公开发布的版本。", "公開リリースが見つかりませんでした。"),
+                ReleaseStatus.Failed => Text("Could not check GitHub. Try again.", "无法查询 GitHub，请重试。", "GitHub を確認できませんでした。再試行してください。"),
+                _ => string.Empty,
+            };
         }
 
         private string Text(string english, string chinese, string japanese)
