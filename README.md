@@ -1,2 +1,2 @@
-Subrepository of https://github.com/sukiromu52/VRCPA_For_Unity
+Subrepository of VRCPA(https://github.com/sukiromu52/VRC-Photo-Atelier)
 1. VirtualLens2 support
