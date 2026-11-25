@@ -66,7 +66,11 @@ namespace VRCPA.Editor
 
             var avatarRoot = avatar.transform;
             var viewpoint = avatarRoot.TransformPoint(avatar.ViewPosition);
-            anchor.SetPositionAndRotation(viewpoint + avatarRoot.forward, avatarRoot.rotation);
+            var initialPosition = viewpoint + avatarRoot.forward;
+            var follow = rig.Find("AnchorFollow");
+            if (follow)
+                follow.SetPositionAndRotation(initialPosition, avatarRoot.rotation);
+            anchor.SetPositionAndRotation(initialPosition, avatarRoot.rotation);
 
             // Turn the camera before its animated yaw and pitch, leaving translation in Anchor space.
             yawBase.localRotation = Quaternion.Euler(0f, 180f, 0f);
