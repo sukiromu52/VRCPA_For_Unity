@@ -13,7 +13,7 @@
 
    ![Hierarchy でアバターの直下に配置した VRCPA](image_for_readme/2.png)
 
-3. Hierarchy で `VRCPA` を選択し、Inspector の **自動検出** をクリックします。
+3. Hierarchy で `VRCPA` を選択し、Inspector の **外部ポーズ参照を設定** をクリックします。
 4. **VirtualLens2 オブジェクト** と **カメラ姿勢 (CameraPOS)** の両方に値が入ったら、**自動検出** をクリックします。Inspector に「VirtualLens2 にこの CameraPOS が設定されています。」と表示されれば、セットアップは完了です。
 
    ![CameraPOS の設定が完了した VRCPA の Inspector](image_for_readme/3.png)

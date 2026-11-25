@@ -15,7 +15,7 @@ namespace VRCPA.Editor
         private const string SettingsType = "VirtualLens2.VirtualLensSettings";
         private const string PoseSourceProperty = "externalPoseSource";
         private const string CameraPosePath = "Anchor/X/Y/Z/yaw/Pitch/CameraPOS";
-        private const string CurrentVersion = "1.0.1";
+        private const string CurrentVersion = "1.0.2";
         private const string GitHubUrl = "https://github.com/sukiromu52/VRC-Photo-Atelier";
         private const string ReleasesUrl = "https://github.com/sukiromu52/VRCPA_For_Unity/releases";
         private const string LatestReleaseUrl = ReleasesUrl + "/latest";
