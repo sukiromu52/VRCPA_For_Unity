@@ -1,12 +1,17 @@
 # VRCPA for Unity
 
+[![GitHub release](https://img.shields.io/github/release/VRCPA/VRC-Photo-Atelier.svg)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/VRCPA/VRC-Photo-Atelier/total?color=6451f1)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/VRCPA/VRC-Photo-Atelier/ci.yml?branch=master)](https://github.com/VRCPA/VRC-Photo-Atelier/actions/workflows/ci.yml)
+[![Discord](https://img.shields.io/badge/discord-join-7289DA?logo=discord&logoColor=white)](https://discord.gg/zJNsnX5q7Q)
+
 [English](README.md) · **简体中文** · [日本語](README.ja.md)
 
-这是 [VRC Photo Atelier](https://github.com/sukiromu52/VRC-Photo-Atelier) 的 Unity 子仓库。
+这是 [VRC Photo Atelier](https://github.com/VRCPA/VRC-Photo-Atelier) 的 Unity 子仓库。
 
 ## 安装与配置
 
-1. 将 `.unitypackage` 导入 Unity 项目。
+1. 从 [Releases](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest) 下载 `.unitypackage`，并导入 Unity 项目。
 2. 在 Project 窗口的 `Assets/VRCPA` 中找到 `VRCPA` 预制体，在 Hierarchy 中将其设为 Avatar 根对象的直接子对象。
 
    ![Project 窗口中的 VRCPA 预制体](image_for_readme/1.png)

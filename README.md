@@ -1,12 +1,17 @@
 # VRCPA for Unity
 
+[![GitHub release](https://img.shields.io/github/release/VRCPA/VRC-Photo-Atelier.svg)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/VRCPA/VRC-Photo-Atelier/total?color=6451f1)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/VRCPA/VRC-Photo-Atelier/ci.yml?branch=master)](https://github.com/VRCPA/VRC-Photo-Atelier/actions/workflows/ci.yml)
+[![Discord](https://img.shields.io/badge/discord-join-7289DA?logo=discord&logoColor=white)](https://discord.gg/zJNsnX5q7Q)
+
 **English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-This is the Unity subrepository for [VRC Photo Atelier](https://github.com/sukiromu52/VRC-Photo-Atelier).
+This is the Unity subrepository for [VRC Photo Atelier](https://github.com/VRCPA/VRC-Photo-Atelier).
 
 ## Setup
 
-1. Import the `.unitypackage` into your Unity project.
+1. Download the `.unitypackage` from [Releases](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest) and import it into your Unity project.
 2. In the Project window, find the `VRCPA` prefab under `Assets/VRCPA` and place it directly under your avatar root in the Hierarchy.
 
    ![VRCPA prefab in the Project window](image_for_readme/1.png)

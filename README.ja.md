@@ -1,12 +1,17 @@
 # VRCPA for Unity
 
+[![GitHub release](https://img.shields.io/github/release/VRCPA/VRC-Photo-Atelier.svg)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/VRCPA/VRC-Photo-Atelier/total?color=6451f1)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/VRCPA/VRC-Photo-Atelier/ci.yml?branch=master)](https://github.com/VRCPA/VRC-Photo-Atelier/actions/workflows/ci.yml)
+[![Discord](https://img.shields.io/badge/discord-join-7289DA?logo=discord&logoColor=white)](https://discord.gg/zJNsnX5q7Q)
+
 [English](README.md) · [简体中文](README.zh-CN.md) · **日本語**
 
-これは [VRC Photo Atelier](https://github.com/sukiromu52/VRC-Photo-Atelier) の Unity 用サブリポジトリです。
+これは [VRC Photo Atelier](https://github.com/VRCPA/VRC-Photo-Atelier) の Unity 用サブリポジトリです。
 
 ## セットアップ
 
-1. `.unitypackage` を Unity プロジェクトにインポートします。
+1. [Releases](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest) から `.unitypackage` をダウンロードし、Unity プロジェクトにインポートします。
 2. Project ウィンドウの `Assets/VRCPA` にある `VRCPA` プレハブを、Hierarchy でアバターのルートオブジェクトの直下に配置します。
 
    ![Project ウィンドウの VRCPA プレハブ](image_for_readme/1.png)
