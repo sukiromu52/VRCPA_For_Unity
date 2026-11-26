@@ -1,8 +1,8 @@
 # VRCPA for Unity
 
-[![GitHub release](https://img.shields.io/github/release/VRCPA/VRC-Photo-Atelier.svg)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/VRCPA/VRC-Photo-Atelier/total?color=6451f1)](https://github.com/VRCPA/VRC-Photo-Atelier/releases/latest)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/VRCPA/VRC-Photo-Atelier/ci.yml?branch=master)](https://github.com/VRCPA/VRC-Photo-Atelier/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/release/VRCPA/VRCPA_For_Unity.svg)](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/VRCPA/VRCPA_For_Unity/total?color=6451f1)](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/VRCPA/VRCPA_For_Unity/ci.yml?branch=master)](https://github.com/VRCPA/VRCPA_For_Unity/actions/workflows/ci.yml)
 [![Discord](https://img.shields.io/badge/discord-join-7289DA?logo=discord&logoColor=white)](https://discord.gg/zJNsnX5q7Q)
 
 **English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
