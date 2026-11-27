@@ -12,14 +12,20 @@
 ## 安装与配置
 
 1. 从 [Releases](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest) 下载 `.unitypackage`，并导入 Unity 项目。
-2. 在 Project 窗口的 `Assets/VRCPA` 中找到 `VRCPA` 预制体，在 Hierarchy 中将其设为 Avatar 根对象的直接子对象。
+
+![6](image_for_readme\6.png)
+
+1. 在 Project 窗口的 `Assets/VRCPA` 中找到 `VRCPA` 预制体，在 Hierarchy 中将其设为 Avatar 根对象的直接子对象（示例使用的Avatar名称为Plum_kisekae）。
 
    ![Project 窗口中的 VRCPA 预制体](image_for_readme/1.png)
 
    ![Hierarchy 中作为 Avatar 直接子对象的 VRCPA](image_for_readme/2.png)
 
-3. 在 Hierarchy 中选中 `VRCPA`，然后在 Inspector 中点击 **自动检测**。
-4. **VirtualLens2 对象**和**相机位姿 (CameraPOS)** 都填好后，点击 **绑定外部位姿来源**。Inspector 提示 VirtualLens2 已绑定到这个 CameraPOS 时，配置即完成。
+2. 在 Hierarchy 中选中 `VRCPA`，然后在 Inspector 中点击 **自动检测**。
+
+3. **VirtualLens2 对象**和**相机位姿 (CameraPOS)** 都填好后，点击 **绑定外部位姿来源**。Inspector 提示 VirtualLens2 已绑定到这个 CameraPOS 时，配置即完成。
+
+   ![7](image_for_readme\7.png)
 
    ![VRCPA Inspector 显示 CameraPOS 已绑定](image_for_readme/3.png)
 

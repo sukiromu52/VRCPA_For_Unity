@@ -9,31 +9,32 @@
 
 これは [VRC Photo Atelier](https://github.com/VRCPA/VRC-Photo-Atelier) の Unity 用サブリポジトリです。
 
-## セットアップ
+## インストールとセットアップ
 
 1. [Releases](https://github.com/VRCPA/VRCPA_For_Unity/releases/latest) から `.unitypackage` をダウンロードし、Unity プロジェクトにインポートします。
-2. Project ウィンドウの `Assets/VRCPA` にある `VRCPA` プレハブを、Hierarchy でアバターのルートオブジェクトの直下に配置します。
+
+   ![VRCPA の Unity パッケージをインポート](image_for_readme/6.png)
+
+2. Project ウィンドウの `Assets/VRCPA` にある `VRCPA` プレハブを、Hierarchy でアバターのルートオブジェクトの直下に配置します（例では `Plum_kisekae` という名前のアバターを使用しています）。
 
    ![Project ウィンドウの VRCPA プレハブ](image_for_readme/1.png)
 
    ![Hierarchy でアバターの直下に配置した VRCPA](image_for_readme/2.png)
 
-3. Hierarchy で `VRCPA` を選択し、Inspector の **外部ポーズ参照を設定** をクリックします。
-4. **VirtualLens2 オブジェクト** と **カメラ姿勢 (CameraPOS)** の両方に値が入ったら、**自動検出** をクリックします。Inspector に「VirtualLens2 にこの CameraPOS が設定されています。」と表示されれば、セットアップは完了です。
+3. Hierarchy で `VRCPA` を選択し、Inspector の **自動検出** をクリックします。
+
+4. **VirtualLens2 オブジェクト** と **カメラ姿勢 (CameraPOS)** の両方に値が入ったら、**外部ポーズ参照を設定** をクリックします。Inspector に「VirtualLens2 にこの CameraPOS が設定されています。」と表示されれば、セットアップは完了です。
+
+   ![VRCPA の Inspector にある「自動検出」と「外部ポーズ参照を設定」ボタン](image_for_readme/7.png)
 
    ![CameraPOS の設定が完了した VRCPA の Inspector](image_for_readme/3.png)
 
 ## 自動検出できないとき
 
 - Hierarchy で `VRCPA` 配下の `CameraPOS` を、Inspector の **カメラ姿勢 (CameraPOS)** 欄にドラッグします。
-
-  ![Hierarchy の VRCPA 配下にある CameraPOS](image_for_readme/4.png)
-
 - Hierarchy で **Virtual Lens Settings** コンポーネントが付いた VirtualLens2 オブジェクトを、Inspector の **VirtualLens2 オブジェクト** 欄にドラッグします。
 
-![CameraPOS の設定が完了した VRCPA の Inspector](image_for_readme/3.png)
-
-
+![Hierarchy の VRCPA 配下にある CameraPOS](image_for_readme/4.png)
 
 両方の欄に値を入れたら、**外部ポーズ参照を設定** をクリックします。
 
@@ -55,4 +56,3 @@ VRCPA が追加する同期パラメーターは 0 個で、ローカルの floa
 
 - Modular Avatar
 - VirtualLens2
-- VRCPA
